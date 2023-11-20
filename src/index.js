@@ -4,6 +4,11 @@ document.addEventListener("DOMContentLoaded", () => {
     //CONST
     const dogBarDiv = document.querySelector("#dog-bar")
 
+    const dogInfoDiv = document.querySelector("#dog-info")
+    const infoName = document.createElement("h2")
+    const infoImg = document.createElement("img")
+    const infoGood = document.createElement("button")
+
 
 
 
@@ -17,6 +22,37 @@ document.addEventListener("DOMContentLoaded", () => {
             dogSpan.textContent = pups.name
             dogBarDiv.appendChild(dogSpan)
 
+            //3 show pup details
+            dogSpan.addEventListener("click", (e) => {
+                e.preventDefault()
+
+                infoName.textContent = pups.name
+                infoImg.src = pups.image
+                infoGood.textContent = pups.isGoodDog ? "Good Dog" : "Bad Dog"
+
+            })
+            
+        })
+    })
+    
+    //3 show pup details in main doggo section
+    fetch("http://localhost:3000/pups/1")
+    .then(res => res.json())
+    .then(pup => {
+        
+        infoName.textContent = pup.name
+        infoImg.src = pup.image
+        infoGood.textContent = pup.isGoodDog ? "Good Dog" : "Bad Dog"
+        
+        dogInfoDiv.appendChild(infoName)
+        dogInfoDiv.appendChild(infoImg)
+        dogInfoDiv.appendChild(infoGood)
+        
+        infoGood.addEventListener("click", (e) => {
+            e.preventDefault()
+    
+            pup.isGoodDog =! pup.isGoodDog
+            infoGood.textContent = pup.isGoodDog ? "Good Dog" : "Bad Dog"
         })
     })
 
